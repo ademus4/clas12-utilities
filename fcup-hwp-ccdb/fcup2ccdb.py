@@ -141,9 +141,9 @@ while len(tmp)>0:
     firstRun,firstData = lastRun,lastData
 
 # set last change's upper run limit to infinity:
-offsets[len(offsets)-1].setRunMax(None)
-attens[len(attens)-1].setRunMax(None)
-hwps[len(hwps)-1].setRunMax(None)
+offsets[len(offsets)-1].runMax=None
+attens[len(attens)-1].runMax=None
+hwps[len(hwps)-1].runMax=None
 
 def findCcdbEntry(run,entries):
   for entry in entries:
@@ -180,7 +180,7 @@ while len(tmp.keys())>0:
   if previous is not None and previous!=data or len(tmp.keys())==0:
     f=FcupCcdbEntry(runStart,run-1,previous)
     if len(tmp.keys())==0:
-      f.setRunMax(None)
+      f.runMax=None
     runStart=run
     print f
     f.writeFile(directory='./fcup-data')
@@ -203,7 +203,7 @@ while len(tmp.keys())>0:
   if previous is not None and previous!=data or len(tmp.keys())==0:
     f=HwpCcdbEntry(runStart,run-1,previous)
     if len(tmp.keys())==0:
-      f.setRunMax(None)
+      f.runMax=None
     runStart=run
     print f
     f.writeFile(directory='./hwp-data')

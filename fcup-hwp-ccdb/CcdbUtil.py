@@ -5,12 +5,6 @@ class RunRange:
     self.runMin=runMin
     self.runMax=runMax
     self.data=data
-  def setRunMin(self,runMin):
-    self.runMin=runMin
-    return self
-  def setRunMax(self,runMax):
-    self.runMax=runMax
-    return self
   def contains(self,run):
     if self.runMin is not None and run<self.runMin:
       return False
