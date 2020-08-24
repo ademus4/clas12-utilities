@@ -1,2 +1,2 @@
-For miscellaneous stuff unti it finds a better home.
+For miscellaneous stuff until it finds a better home.
 
