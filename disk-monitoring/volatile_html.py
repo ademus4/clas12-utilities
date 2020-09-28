@@ -3,6 +3,7 @@ import mysql.connector
 import time
 import sys
 
+MAX_ROWS = 5e4
 
 path_prefix='/volatile/clas12'
 if len(sys.argv)>1:
@@ -28,6 +29,8 @@ used = float(line_array[1])
 target_size = used - reserved
 if target_size < 1000.0:
   target_size = 1000.0
+#if target_size > 10000.0:
+#  target_size = 10000.0
 
 dirlist = []
 def checkdir(dir):
@@ -91,7 +94,7 @@ for i in range(len(result)):
     line += '<td>%s</td>'%line_str_array[1]
     line += '</tr>'
     print(line)
-  if sum_gb > target_size:
+  if sum_gb > target_size or count_dir > MAX_ROWS:
     break
 
 print('</table>')
