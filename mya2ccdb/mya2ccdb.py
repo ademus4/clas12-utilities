@@ -96,13 +96,13 @@ for myaDatum in myaData.get():
 
 # print any unknown beam energies:
 if len(badEnergies)>0:
-  print '\nIgnored Invalid Beam Energies:::::::::::::::::::'
-  for xx in badEnergies:  print xx
+  print('\nIgnored Invalid Beam Energies:::::::::::::::::::')
+  for xx in badEnergies:  print(xx)
 
 # print all registered changes:
-print '\nData:::::::::::::::::::::::::::::::::::::::'
+print('\nData:::::::::::::::::::::::::::::::::::::::')
 for run,data in runData.items():
-  for datum in data: print datum
+  for datum in data: print(datum)
 
 def getOffsetAverage(data):
   offsets = [ datum.offset for datum in data ]
@@ -154,15 +154,15 @@ def findCcdbEntry(run,entries):
       return entry
   return None
 
-print '\nFaraday Cup Offsets::::::::::::::::::::::::'
-for offset in offsets: print offset
-print '\nBeam Blocker Attenuations::::::::::::::::::'
-for atten in attens: print atten
-print
-print '\nHalf Wave Plates:::::::::::::::::::::::::::'
-for hwp in hwps: print hwp
-print
-print
+print('\nFaraday Cup Offsets::::::::::::::::::::::::')
+for offset in offsets: print(offset)
+print('\nBeam Blocker Attenuations::::::::::::::::::')
+for atten in attens: print(atten)
+print()
+print('\nHalf Wave Plates:::::::::::::::::::::::::::')
+for hwp in hwps: print(hwp)
+print()
+print()
 
 fcmd=open('fcup2ccdb.sh','w')
 tmp = copy.deepcopy(runData)
@@ -185,7 +185,7 @@ while len(tmp.keys())>0:
     if len(tmp.keys())==0:
       f.runMax=None
     runStart=run
-    print f
+    print(f)
     f.writeFile(directory='./fcup-data')
     fcmd.write(f.getCommand()+'\n')
   previous=data
@@ -208,10 +208,10 @@ while len(tmp.keys())>0:
     if len(tmp.keys())==0:
       f.runMax=None
     runStart=run
-    print f
+    print(f)
     f.writeFile(directory='./hwp-data')
     fcmd.write(f.getCommand()+'\n')
   previous=data
 
-print
+print()
 
