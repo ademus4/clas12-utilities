@@ -10,17 +10,20 @@ from CcdbUtil import *
 #
 
 cli=argparse.ArgumentParser(description='Extract fcup/hwp info from Mya archive for CCDB.')
-cli.add_argument('start',help='start date (YYYY-MM-DD HH:MM:SS)',type=str)
-cli.add_argument('end',help='end date (YYYY-MM-DD HH:MM:SS)',type=str)
+cli.add_argument('start',help='start date (YYYY-MM-DD_HH:MM:SS)',type=str)
+cli.add_argument('end',help='end date (YYYY-MM-DD_HH:MM:SS)',type=str)
 args=cli.parse_args(sys.argv[1:])
 
-# mya date format: (Y-M-D H:M:S, with fixed widths:)
-fmt='^\d\d\d\d-\d\d-\d\d \d\d:\d\d:\d\d$'
+# mya date format: (Y-M-D_H:M:S, with fixed widths:)
+fmt='^\d\d\d\d-\d\d-\d\d_\d\d:\d\d:\d\d$'
 
 mm=re.match(fmt,args.start)
-if mm is None: cli.error('Invalid date format: '+args.start)
+if mm is None: cli.error('Invalid start date format: '+args.start)
 mm=re.match(fmt,args.end)
-if mm is None: cli.error('Invalid date format: '+args.end)
+if mm is None: cli.error('Invalid end date format: '+args.end)
+
+print('Start:   '+args.start)
+print('End:     '+args.end)
 
 # User-defined: 
 #start,end='2019-12-01 00:00:00','2019-12-18 00:00:00'#,0
