@@ -84,6 +84,10 @@ $jdebug = 0;
 while ($dirname = <FINDDIR>) {
     if (!($idebug%100)) {print "$idebug: dirname = $dirname";}
     chomp $dirname;
+    if ($dirname =~ m/\"/) {
+        # ignore dirs with quotes in names, else fix sql query
+        next;
+    }
     @stat = stat($dirname);
     $sql = "insert into $dir_table set dirname = \"$dirname\", uid = $stat[4], size = $stat[7];";
     #print $sql, "\n";
@@ -101,20 +105,24 @@ while ($dirname = <FINDDIR>) {
     $dirname =~ s/</\\</g; # escape <
     open (FINDFILE, "find $dirname -maxdepth 1 -type f |");
     while ($filename = <FINDFILE>) {
-	chomp $filename;
-	if (!($jdebug%1000)) {print "$jdebug: $filename\n";}
-	@stat = stat($filename);
-	if (@stat) {
-	    @token = split(/\//, $filename);
-	    $file_no_path = $token[$#token];
-	    #print "file_no_path = $file_no_path\n";
-	    $file_no_path =~ s/\\/\\\\/g; # escape backslash
-	    $sql = "insert into $file_table set filename = \"$file_no_path\", dirId = $last_id, atime = from_unixtime($stat[8]), size = $stat[7], uid = $stat[4];";
-	    make_query($dbh_db, \$sth);
-	} else {
-	    print "cannot stat $filename in $dirname\n";
-	}
-	$jdebug++;
+        chomp $filename;
+        if ($filename =~ m/\"/) {
+            # ignore files with quotes in names, else fix sql query
+            next;
+        }
+        if (!($jdebug%1000)) {print "$jdebug: $filename\n";}
+        @stat = stat($filename);
+        if (@stat) {
+            @token = split(/\//, $filename);
+            $file_no_path = $token[$#token];
+            #print "file_no_path = $file_no_path\n";
+            $file_no_path =~ s/\\/\\\\/g; # escape backslash
+            $sql = "insert into $file_table set filename = \"$file_no_path\", dirId = $last_id, atime = from_unixtime($stat[8]), size = $stat[7], uid = $stat[4];";
+            make_query($dbh_db, \$sth);
+        } else {
+            print "cannot stat $filename in $dirname\n";
+        }
+        $jdebug++;
     }
     close(FINDFILE);
     $idebug++;
