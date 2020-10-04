@@ -1,0 +1,35 @@
+<!DOCTYPE configuration>
+<myaPlot Version="2.0" width="1032">
+<plot height="216" start="-3538800" mya="ops" tile="1" legend="1" end="0">
+<axis max="12400" min="11600" manual="1" logarithmic="0">
+<pv style="Step" type="channel" name="B_DAQ:run_number" color="4278190335"/>
+</axis>
+</plot>
+<plot height="216" start="-3538800" mya="ops" tile="0" legend="1" end="0">
+<axis manual="0" logarithmic="0">
+<pv style="Step" type="channel" name="fcup_slope" color="4284900864"/>
+</axis>
+<axis manual="0" logarithmic="0">
+<pv style="Step" type="channel" name="fcup_offset" color="4278228042"/>
+</axis>
+<axis manual="0" logarithmic="0">
+<pv style="Step" type="channel" name="beam_stop" color="4294901888"/>
+</axis>
+<axis manual="0" logarithmic="0">
+<pv style="Step" type="channel" name="MBSY2C_energy" color="4279270303"/>
+</axis>
+</plot>
+<plot height="226" start="-3538800" mya="ops" tile="1" legend="1" end="0">
+<axis manual="0" logarithmic="0">
+<pv style="Step" type="channel" name="slm_slope" color="4281042189"/>
+</axis>
+<axis manual="0" logarithmic="0">
+<pv style="Step" type="channel" name="slm_offset" color="4289861605"/>
+</axis>
+</plot>
+<plot height="304" start="-3538800" mya="ops" tile="1" legend="1" end="0">
+<axis manual="0" logarithmic="0">
+<pv style="Step" type="channel" name="IGL1I00OD16_16" color="4290723347"/>
+</axis>
+</plot>
+</myaPlot>
