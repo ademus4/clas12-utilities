@@ -10,17 +10,20 @@ from CcdbUtil import *
 #
 
 cli=argparse.ArgumentParser(description='Extract fcup/hwp info from Mya archive for CCDB.')
-cli.add_argument('start',help='start date (YYYY-MM-DD HH:MM:SS)',type=str)
-cli.add_argument('end',help='end date (YYYY-MM-DD HH:MM:SS)',type=str)
+cli.add_argument('start',help='start date (YYYY-MM-DD_HH:MM:SS)',type=str)
+cli.add_argument('end',help='end date (YYYY-MM-DD_HH:MM:SS)',type=str)
 args=cli.parse_args(sys.argv[1:])
 
-# mya date format: (Y-M-D H:M:S, with fixed widths:)
-fmt='^\d\d\d\d-\d\d-\d\d \d\d:\d\d:\d\d$'
+# mya date format: (Y-M-D_H:M:S, with fixed widths:)
+fmt='^\d\d\d\d-\d\d-\d\d_\d\d:\d\d:\d\d$'
 
 mm=re.match(fmt,args.start)
-if mm is None: cli.error('Invalid date format: '+args.start)
+if mm is None: cli.error('Invalid start date format: '+args.start)
 mm=re.match(fmt,args.end)
-if mm is None: cli.error('Invalid date format: '+args.end)
+if mm is None: cli.error('Invalid end date format: '+args.end)
+
+print('Start:   '+args.start)
+print('End:     '+args.end)
 
 # User-defined: 
 #start,end='2019-12-01 00:00:00','2019-12-18 00:00:00'#,0
@@ -93,13 +96,13 @@ for myaDatum in myaData.get():
 
 # print any unknown beam energies:
 if len(badEnergies)>0:
-  print '\nIgnored Invalid Beam Energies:::::::::::::::::::'
-  for xx in badEnergies:  print xx
+  print('\nIgnored Invalid Beam Energies:::::::::::::::::::')
+  for xx in badEnergies:  print(xx)
 
 # print all registered changes:
-print '\nData:::::::::::::::::::::::::::::::::::::::'
+print('\nData:::::::::::::::::::::::::::::::::::::::')
 for run,data in runData.items():
-  for datum in data: print datum
+  for datum in data: print(datum)
 
 def getOffsetAverage(data):
   offsets = [ datum.offset for datum in data ]
@@ -151,15 +154,15 @@ def findCcdbEntry(run,entries):
       return entry
   return None
 
-print '\nFaraday Cup Offsets::::::::::::::::::::::::'
-for offset in offsets: print offset
-print '\nBeam Blocker Attenuations::::::::::::::::::'
-for atten in attens: print atten
-print
-print '\nHalf Wave Plates:::::::::::::::::::::::::::'
-for hwp in hwps: print hwp
-print
-print
+print('\nFaraday Cup Offsets::::::::::::::::::::::::')
+for offset in offsets: print(offset)
+print('\nBeam Blocker Attenuations::::::::::::::::::')
+for atten in attens: print(atten)
+print()
+print('\nHalf Wave Plates:::::::::::::::::::::::::::')
+for hwp in hwps: print(hwp)
+print()
+print()
 
 fcmd=open('fcup2ccdb.sh','w')
 tmp = copy.deepcopy(runData)
@@ -182,7 +185,7 @@ while len(tmp.keys())>0:
     if len(tmp.keys())==0:
       f.runMax=None
     runStart=run
-    print f
+    print(f)
     f.writeFile(directory='./fcup-data')
     fcmd.write(f.getCommand()+'\n')
   previous=data
@@ -205,10 +208,10 @@ while len(tmp.keys())>0:
     if len(tmp.keys())==0:
       f.runMax=None
     runStart=run
-    print f
+    print(f)
     f.writeFile(directory='./hwp-data')
     fcmd.write(f.getCommand()+'\n')
   previous=data
 
-print
+print()
 

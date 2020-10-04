@@ -77,9 +77,9 @@ if __name__ == '__main__':
   f.setOffset(120.1)
   f.setAttenuation(10.1)
   f.writeFile()
-  print f
+  print(f)
 
   h=HwpCcdbEntry(1234,2345)
   h.setHWP(-1)
-  print h
+  print(h)
 
