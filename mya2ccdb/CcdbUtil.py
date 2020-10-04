@@ -34,7 +34,7 @@ class CcdbEntry(RunRange):
       f.write(self.getRow())
       f.close()
   def getCommand(self):
-    cmd='ccdb -c mysql://clas12writer:geom3try@clasdb/clas12 add '+self.table+' '
+    cmd='ccdb -c mysql://clas12writer:geom3try@clasdb/clas12 add '+self.table+' -r '
     if self.runMin is not None:
       cmd+=str(self.runMin)
     cmd+='-'
@@ -50,6 +50,31 @@ class FcupCcdbEntry(CcdbEntry):
     CcdbEntry.__init__(self,runMin,runMax,data)
     self.prefix='fcup'
     self.table='runcontrol/fcup'
+    # kludge for BONuS, where Faraday cup died:
+    if runMin >= 12857 and runMin <= 12951:
+      self.slope = 1.0
+      self.atten = 0.0
+  def setSlope(self,slope):
+    self.data['slope']=slope
+  def setOffset(self,offset):
+    self.data['offset']=offset
+  def setAttenuation(self,atten):
+    self.data['atten']=atten
+  def getRow(self):
+    return '%s %.2f %.2f %.5f'%(self.getSLC(),\
+        self.data['slope'],self.data['offset'],self.data['atten'])
+
+class SlmCcdbEntry(CcdbEntry):
+  def __init__(self,runMin,runMax,data={'offset':None,'atten':None,'slope':None}):
+    CcdbEntry.__init__(self,runMin,runMax,data)
+    self.prefix='slm'
+    self.table='runcontrol/slm'
+    self.data['slope']=1.0
+    self.data['atten']=0.0
+    # FIXME:  SLM slope is generally unknown, except during special BONuS period:
+    if runMin >= 12878 and runMin <= 12951:
+      self.data['slope']=4298.0
+      self.data['atten']=1.0
   def setSlope(self,slope):
     self.data['slope']=slope
   def setOffset(self,offset):
