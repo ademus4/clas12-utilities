@@ -26,6 +26,10 @@ _ATTEN[ 7546]=14.89565
 _ATTEN[ 6535]=16.283
 _ATTEN[ 6423]=16.9726
 
+_OVERRIDE_ENERGY={
+    RunRange(12444,12853,None):10405
+}
+
 class MyaFcup:
   def __init__(self,myaDatum):
     if not isinstance(myaDatum,MyaDatum):
@@ -63,7 +67,14 @@ class MyaFcup:
       self.stopper = float(myaDatum.getValue('beam_stop'))
     except ValueError:
       self.stopper = None
+    self.energy = self.correctEnergy()
     self.atten = self.getAttenuation()
+  def correctEnergy(self):
+    if self.energy is not None:
+      for runRange,energy in _OVERRIDE_ENERGY.items():
+        if runRange.contains(self.run):
+          return energy
+    return self.energy
   def getAttenuation(self):
     if self.energy is None:
       return None
