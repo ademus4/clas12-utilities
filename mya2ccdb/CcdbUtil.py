@@ -54,12 +54,6 @@ class FcupCcdbEntry(CcdbEntry):
     if runMin >= 12858 and runMin <= 12951:
       self.data['slope'] = 1.0
       self.data['atten'] = 0.0
-  def setSlope(self,slope):
-    self.data['slope']=slope
-  def setOffset(self,offset):
-    self.data['offset']=offset
-  def setAttenuation(self,atten):
-    self.data['atten']=atten
   def getRow(self):
     return '%s %.2f %.2f %.5f'%(self.getSLC(),\
         self.data['slope'],self.data['offset'],self.data['atten'])
@@ -75,12 +69,6 @@ class SlmCcdbEntry(CcdbEntry):
     if runMin >= 12878 and runMin <= 12951:
       self.data['slope']=4298.0
       self.data['atten']=1.0
-  def setSlope(self,slope):
-    self.data['slope']=slope
-  def setOffset(self,offset):
-    self.data['offset']=offset
-  def setAttenuation(self,atten):
-    self.data['atten']=atten
   def getRow(self):
     return '%s %.2f %.2f %.5f'%(self.getSLC(),\
         self.data['slope'],self.data['offset'],self.data['atten'])
@@ -90,21 +78,6 @@ class HwpCcdbEntry(CcdbEntry):
     CcdbEntry.__init__(self,runMin,runMax,data)
     self.prefix='hwp'
     self.table='runcontrol/hwp'
-  def setHWP(self,hwp):
-    self.data['hwp']=hwp
   def getRow(self):
     return '%s %d'%(self.getSLC(),self.data['hwp'])
-
-if __name__ == '__main__':
-
-  f=FcupCcdbEntry(4013,4099)
-  f.setSlope(906.2)
-  f.setOffset(120.1)
-  f.setAttenuation(10.1)
-  f.writeFile()
-  print(f)
-
-  h=HwpCcdbEntry(1234,2345)
-  h.setHWP(-1)
-  print(h)
 
