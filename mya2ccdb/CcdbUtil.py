@@ -51,9 +51,9 @@ class FcupCcdbEntry(CcdbEntry):
     self.prefix='fcup'
     self.table='runcontrol/fcup'
     # kludge for BONuS, where Faraday cup died:
-    if runMin >= 12857 and runMin <= 12951:
-      self.slope = 1.0
-      self.atten = 0.0
+    if runMin >= 12858 and runMin <= 12951:
+      self.data['slope'] = 1.0
+      self.data['atten'] = 0.0
   def setSlope(self,slope):
     self.data['slope']=slope
   def setOffset(self,offset):
