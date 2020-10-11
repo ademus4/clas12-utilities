@@ -7,10 +7,10 @@ export PYTHONPATH=/group/clas12/packages/mysql-connector/8.0.17/lib
 rm -f index.html cache.html hps-volatile.html hps-cache.html
 
 ./volatile_html.py >& index.html
-scp index.html clas12@jlabl5:~/clasweb/clas12offline/disk/volatile
+scp index.html clas12@ifarm1901:/group/clas/www/clasweb/html/clas12offline/disk/volatile
 
 ./cache_html.py >& cache.html
-scp cache.html clas12@jlabl5:~/clasweb/clas12offline/disk/cache/index.html
+scp cache.html clas12@ifarm1901:/group/clas/www/clasweb/html/clas12offline/disk/cache/index.html
 
 ./volatile_html.py /volatile/hallb/hps >& hps-volatile.html
 scp hps-volatile.html hps@ifarm1901:/group/hps/www/hpsweb/html/disk/volatile/index.html
