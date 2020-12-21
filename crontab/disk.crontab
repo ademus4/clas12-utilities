@@ -1,6 +1,6 @@
 SHELL=/bin/bash
 PATH=/sbin:/bin:/usr/sbin:/usr/bin
-MAILTO=baltzell@jlab.org
+MAILTO=bobcat@bob.cat
 
 # For details see man 4 crontabs
 #
@@ -15,4 +15,6 @@ MAILTO=baltzell@jlab.org
     5 22  *  *  5 /usr/bin/flock -n /home/baltzell/.disk-cron.lock /home/baltzell/clas12/disk/report-hps.sh || echo "ERROR:  Previous disk cronjob still running"
     5 22  *  *  6 /usr/bin/flock -n /home/baltzell/.disk-cron.lock /home/baltzell/clas12/disk/report.sh || echo "ERROR:  Previous disk cronjob still running"
     5 21  *  *  * /usr/bin/flock -n /home/baltzell/.disk-cron.lock /home/baltzell/clas12/disk/volatile_report.sh || echo "ERROR:  Previous disk cronjob still running"
+    5 20  *  *  6 /usr/bin/flock -n /home/baltzell/.disk-cron.lock /home/baltzell/clas12/disk/free.py 0.05 asdf || echo "ERROR:  Previs disk cronjob still running"
+    5  2  *  *  * /usr/bin/flock -n /home/baltzell/.disk-cron.lock /home/baltzell/clas12/disk/free.py 0.03 || echo "ERROR:  Previs disk cronjob still running"
 
